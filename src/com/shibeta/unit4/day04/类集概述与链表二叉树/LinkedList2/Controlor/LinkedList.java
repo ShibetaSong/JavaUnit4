@@ -74,40 +74,39 @@ public class LinkedList {
                         // 查找
                         if (choice == 2) {
                             search: while (true) {
-                            int tMenuChoice = UserInput.menuSelect(1, 4);
-                            switch (tMenuChoice) {
-                                case 1 -> ShowInfo.searchByLocation(list);
-                                case 2 -> {
-                                    int location = UserInput.locationInput(list);
-                                    if (location != -1) {
-                                        ShowInfo.searchByLocation(list, location);
-                                    }
-                                }
-                                case 3 -> {
-                                    while (true) {
-                                        UserMenu.selectDataType();
-                                        int dataType = UserInput.menuSelect(1, 4);
-                                        if (dataType == -1) {
-                                            ShowMessage.wrongSelection();
-                                            continue;
-                                        } else if (dataType == 4) {
-                                            break;
+                                int tMenuChoice = UserInput.menuSelect(1, 4);
+                                switch (tMenuChoice) {
+                                    case 1 -> ShowInfo.searchByLocation(list);
+                                    case 2 -> {
+                                        int location = UserInput.locationInput(list);
+                                        if (location != -1) {
+                                            ShowInfo.searchByLocation(list, location);
+                                        } else {
+                                            ShowMessage.noSuchData();
                                         }
-                                        ShowMessage.dataInput();
-                                        ShowInfo.searchByData(list, input.nextLine(), dataType);
+                                    }
+                                    case 3 -> {
+                                        while (true) {
+                                            UserMenu.selectDataType();
+                                            int dataType = UserInput.menuSelect(1, 4);
+                                            if (dataType == -1) {
+                                                ShowMessage.wrongSelection();
+                                                continue;
+                                            } else if (dataType == 4) {
+                                                break;
+                                            }
+                                            ShowMessage.dataInput();
+                                            ShowInfo.searchByData(list, input.nextLine(), dataType);
+                                        }
 
                                     }
-
+                                    case 4 -> {
+                                        break search;
+                                    }
+                                    case -1 -> ShowMessage.wrongSelection();
                                 }
-                                case 4 -> {
-                                    break search;
-                                }
-                                case -1 -> ShowMessage.wrongSelection();
+                                    UserMenu.searchMenu();
                             }
-                                UserMenu.searchMenu();
-
-                        }
-
                         }
 
                         // 删除数据
@@ -146,9 +145,9 @@ public class LinkedList {
                                         int sMenuChoice = UserInput.menuSelect(1, 4);
                                         if (sMenuChoice == -1) {
                                             ShowMessage.wrongSelection();
-                                            UserMenu.selectDataType();
                                             continue;
                                         } else if (sMenuChoice == 4) {
+                                            UserMenu.removeMenu();
                                             break;
                                         }
 
