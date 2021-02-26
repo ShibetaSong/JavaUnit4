@@ -66,7 +66,7 @@ public class List {
         if (this.data != null) {
             return this.data.toString();
         } else {
-            return Message.dataHasBeenRemoved();
+            return Message.noSuchData();
         }
     }
 
@@ -81,12 +81,12 @@ public class List {
                 if (this.data.equals(data)) {
                     return thisLocation;
                 }
-                if (this.n != null) {
-                    return this.n.getByData(data);
-                } else {
-                    ShowMessage.noSuchData();
-                    return -1;
-                }
+            }
+
+            if (this.n != null) {
+                return this.n.getByData(data);
+            } else {
+                return -1;
             }
         }
 
@@ -119,7 +119,7 @@ public class List {
         }
 
         ShowMessage.unknownError("MLS_GetByData_077_120");
-        return -1;
+        return -2;
     }
 
     /**
@@ -204,6 +204,11 @@ public class List {
                 return Message.noSuchData();
             }
         }
+
+        if (data instanceof Boolean) {
+            return Message.wrongDataType();
+        }
+
         return Message.unknownError();
     }
 

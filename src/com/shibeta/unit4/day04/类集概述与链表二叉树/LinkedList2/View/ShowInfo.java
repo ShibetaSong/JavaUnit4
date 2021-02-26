@@ -24,8 +24,12 @@ public class ShowInfo {
     public static void searchByData(List list, Object data, int type) {
         data = List.processData(data.toString(), type);
         int location = list.getByData(data);
-        if (location != -1) {
-            System.out.println(list.getByData(data));
+        if (location == -1) {
+            ShowMessage.noSuchData();
+        } else if (location == -2){
+            ShowMessage.unknownError("MLS_GetByData_077_120");
+        } else {
+            System.out.println(location);
         }
     }
 
@@ -37,6 +41,8 @@ public class ShowInfo {
             return 1;
         } else if (notice.equals(Message.noSuchData())) {
             return -1;
+        } else if (notice.equals(Message.wrongDataType())){
+            return -2;
         } else {
             return 0;
         }

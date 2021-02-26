@@ -161,6 +161,10 @@ public class LinkedList {
                                             ShowMessage.noSuchData();
                                             UserMenu.removeMenu();
                                             break;
+                                        } else if(result == -2) {
+                                            ShowMessage.wrongDataType();
+                                            UserMenu.removeMenu();
+                                            break;
                                         } else {
                                             ShowMessage.unknownError("MLS_deleteByData_0159_0202");
                                             UserMenu.removeMenu();

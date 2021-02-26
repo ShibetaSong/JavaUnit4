@@ -151,7 +151,6 @@ public class UserInput {
                         data = input.nextLine();
                         processedData = List.processData(data, 3, false);
                         if (!(processedData instanceof Float)) {
-                            ShowMessage.wrongDataType();
                             return false;
                         }
                         return processedData;
