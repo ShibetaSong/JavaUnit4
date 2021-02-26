@@ -91,13 +91,16 @@ public class List {
         }
 
         if (data instanceof Integer) {
-            if (this.data == data) {
-                return thisLocation;
+            BigDecimal intData = new BigDecimal(data.toString());
+            if (this.data instanceof Integer) {
+                BigDecimal thisData = new BigDecimal(this.data.toString());
+                if (thisData.intValue() == intData.intValue()) {
+                    return thisLocation;
+                }
             }
             if (this.n != null) {
-                return n.getByData(data);
+                return this.getByData(data);
             } else {
-                ShowMessage.noSuchData();
                 return -1;
             }
         }
@@ -113,7 +116,6 @@ public class List {
             if (this.n != null) {
                 return this.n.getByData(data);
             } else {
-                ShowMessage.noSuchData();
                 return -1;
             }
         }
