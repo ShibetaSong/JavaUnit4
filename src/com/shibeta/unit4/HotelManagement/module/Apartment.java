@@ -5,6 +5,7 @@ import com.shibeta.unit4.HotelManagement.view.ExceptionMessage;
 public class Apartment {
     static StringBuilder roomType = new StringBuilder("标准双床房 高级大床房 影视大床房 高级套房 ");
     static String[] roomTypes = roomType.toString().split(" ");
+    static StringBuilder roomFacilitiesRepair = new StringBuilder();
 
     /**
      * 获取指定房间类型
@@ -83,8 +84,16 @@ public class Apartment {
             }
         }
         return new StringBuilder(ExceptionMessage.noSuchRoomType());
-
     }
 
+    public static void applyRoomFacilitiesRepair(String facility) {
+        if (!(facility.equals(""))) {
+            roomFacilitiesRepair.append(facility);
+            roomFacilitiesRepair.append("/end;");
+        }
+    }
 
+    public static String[] getRoomFacilitiesRepair() {
+        return roomFacilitiesRepair.toString().split("/end;");
+    }
 }
