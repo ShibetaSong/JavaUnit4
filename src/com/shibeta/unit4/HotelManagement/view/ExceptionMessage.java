@@ -25,4 +25,12 @@ public class ExceptionMessage {
     public static String wrongUserOrPasswd() {
         return "用户名或密码输入错误";
     }
+
+    public static String noSuchRoomType() {
+        return "无该类型房间";
+    }
+
+    public static String roomTypeExist() {
+        return "此类型房间已存在";
+    }
 }
