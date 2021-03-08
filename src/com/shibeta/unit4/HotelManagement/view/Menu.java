@@ -58,5 +58,6 @@ public class Menu {
         System.out.println("\n==========欢迎您, " + username + " 用户==========");
         System.out.println("\t1、查询房间信息");
         System.out.println("\t2、查询服务");
+        System.out.println("\t3、退出");
     }
 }

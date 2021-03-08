@@ -13,12 +13,12 @@ public class HotelManagement {
         // 主程序循环
         while (true) {
             // 欢迎页面
-            int userSelect = ManagementProgram.welcome();
-            if (userSelect == 3) {
+            int select = ManagementProgram.welcome();
+            if (select == 3) {
                 break;
             }
-            userSelect = inputVerify.userSelectExchange(userSelect, 1, 2);
-            String result = inputVerify.userSelectVerify(userSelect);
+            select = inputVerify.userSelectExchange(select, 1, 2);
+            String result = inputVerify.userSelectVerify(select);
 
             if (result.equals(ExceptionMessage.numberInputOutOfRange())) {
                 ShowMessage.numberInputOutOfRange();
@@ -32,15 +32,23 @@ public class HotelManagement {
             if (result.equals(InformationMessage.selectSuccessfully())) {
                 // 登陆页面
                 Menu.login();
-                String loginResult = ManagementProgram.login(userSelect);
+                String loginResult = ManagementProgram.login(select);
+
+                // 管理员登陆 密码错误
                 if (loginResult.equals(ExceptionMessage.wrongPassword())) {
                     ShowMessage.wrongPassword();
                     continue;
                 }
+
+                // 用户登陆 用户名密码错误
+                if (loginResult.equals(ExceptionMessage.wrongUserOrPasswd())) {
+                    ShowMessage.wrongUserOrPasswd();
+                    continue;
+                }
+
                 if (loginResult.equals(InformationMessage.backMenu())) {
                     break;
                 }
-
                 if (loginResult.equals(InformationMessage.adminLoginSuccessfully())) {
                     // 管理员功能模块循环
                     while (true) {
@@ -72,12 +80,16 @@ public class HotelManagement {
 
                 }
 
-                if (result.equals(InformationMessage.userLoginSuccessfully())) {
+                if (loginResult.equals(InformationMessage.userLoginSuccessfully())) {
                     // 用户功能模块循环
                     while (true) {
                         Menu.user();
+                        ShowMessage.userSelect();
+                        int userSelect = UserInput.userSelect();
+
                     }
                 }
+
             } else {
                 ShowMessage.unknownException("cHM_main_20_43___43");
             }

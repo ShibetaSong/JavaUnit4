@@ -75,4 +75,8 @@ public class ShowMessage {
     public static void enterGuestPhone() {
         System.out.println(InformationMessage.enterGuestPhone());
     }
+
+    public static void wrongUserOrPasswd() {
+        System.out.println(ExceptionMessage.wrongUserOrPasswd());
+    }
 }
