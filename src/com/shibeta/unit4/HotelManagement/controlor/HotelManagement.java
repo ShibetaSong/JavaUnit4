@@ -93,6 +93,7 @@ public class HotelManagement {
                             case 5 -> {
                                 Menu.adminShowInfo();
                             }
+                            default -> ShowMessage.wrongFormat();
                         }
                     }
 
