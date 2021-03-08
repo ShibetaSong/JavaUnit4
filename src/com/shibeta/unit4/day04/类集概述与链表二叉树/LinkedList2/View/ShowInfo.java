@@ -18,7 +18,8 @@ public class ShowInfo {
      * @param location 检索的位置
      */
     public static void searchByLocation(List list, int location) {
-        System.out.println(list.getByLocation(location));
+        Object data = list.getByLocation(location);
+        System.out.println(data);
     }
 
     public static void searchByData(List list, Object data, int type) {

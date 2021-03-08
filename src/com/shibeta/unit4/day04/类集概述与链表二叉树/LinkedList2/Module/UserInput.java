@@ -46,7 +46,6 @@ public class UserInput {
         }
 
         if (location < 0 || location > list.getNum()) {
-            ShowMessage.wrongLocation();
             return -1;
         }
         return location;
