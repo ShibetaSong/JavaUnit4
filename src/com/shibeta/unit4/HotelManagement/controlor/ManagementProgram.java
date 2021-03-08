@@ -15,17 +15,22 @@ public class ManagementProgram {
             return UserInput.userSelect();
         }
 
-    public static String login(int identity) {
+    /**
+     * 登陆主进程
+     * @param identity 登陆身份：1、用户; 2、管理员
+     * @return 若以用户登陆，返回用户登陆组信息；若以管理员登陆，返回管理员登陆成功字样
+     */
+    public static Object login(int identity) {
         switch (identity) {
             case 1 -> {
-                ShowMessage.usernameInput();
-                String user = UserInput.usernameInput();
-                ShowMessage.passwordInput();
-                String password = UserInput.passwordInput();
-                if (!userLogin(user, password)) {
-                    return ExceptionMessage.wrongUserOrPasswd();
+                String loginResult = userLogin().toString();
+                String[] loginResults = loginResult.split(" ");
+
+                if (loginResults.length < 2) {
+                    return loginResult;
+                } else {
+                    return loginResults;
                 }
-                return InformationMessage.userLoginSuccessfully();
             }
             case 2 -> {
                 ShowMessage.passwordInput();
@@ -41,13 +46,33 @@ public class ManagementProgram {
         }
     }
 
-    public static boolean userLogin(String uname, String passwd) {
+    /**
+     * 用户登陆核心进程
+     * @return 若登陆正常，返回登陆成功、登陆身份，若是用户登陆则一并返回用户名。若登陆异常，则返回异常信息。
+     */
+    public static StringBuilder userLogin() {
+        ShowMessage.usernameInput();
+        StringBuilder user = new StringBuilder(UserInput.usernameInput());
+        ShowMessage.passwordInput();
+        String password = UserInput.passwordInput();
+
+        if (user.toString().equals("") && password.equals("")) {
+            return new StringBuilder(InformationMessage.guestLogin() + " " + InformationMessage.guestName());
+        }
+
         for (int i = 0; i < User.userName.length; i++) {
-            if (uname.equals(User.userName[i])) {
-                return passwd.equals(User.userPasswd[i]);
+            if (user.toString().equals(User.userName[i])) {
+                if (password.equals(User.userPasswd[i])) {
+                    StringBuilder loginResult = new StringBuilder(InformationMessage.userLoginSuccessfully());
+                    loginResult.append(" ");
+                    loginResult.append(InformationMessage.userLogin());
+                    loginResult.append(" ");
+                    loginResult.append(user);
+                    return loginResult;
+                }
             }
         }
-        return false;
+        return new StringBuilder(ExceptionMessage.wrongUserOrPasswd());
 
     }
 

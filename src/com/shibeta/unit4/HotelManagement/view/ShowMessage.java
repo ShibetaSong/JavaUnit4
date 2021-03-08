@@ -1,6 +1,7 @@
 package com.shibeta.unit4.HotelManagement.view;
 
 import com.shibeta.unit4.day04.类集概述与链表二叉树.LinkedList2.View.Message;
+import jdk.swing.interop.SwingInterOpUtils;
 
 public class ShowMessage {
     /**
@@ -79,4 +80,5 @@ public class ShowMessage {
     public static void wrongUserOrPasswd() {
         System.out.println(ExceptionMessage.wrongUserOrPasswd());
     }
+
 }

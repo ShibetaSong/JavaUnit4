@@ -27,28 +27,46 @@ public class HotelManagement {
                 ShowMessage.wrongFormat();
                 continue;
 
-            // 进入选择
             }
             if (result.equals(InformationMessage.selectSuccessfully())) {
                 // 登陆页面
                 Menu.login();
-                String loginResult = ManagementProgram.login(select);
+
+                // 处理登陆信息
+                Object loginResult = ManagementProgram.login(select);
+                String user = null;
+                String loginIdentify = ExceptionMessage.unknownException("cHM_main_31_110_38");
+
+                if (loginResult instanceof String[]) {
+                    if (((String[]) loginResult).length > 2) {
+                        user = ((String[]) loginResult)[2];
+                    }
+                    loginIdentify = ((String[])loginResult)[1];
+                    loginResult = ((String[]) loginResult)[0];
+
+                } else if (loginResult instanceof String) {
+                    loginIdentify = InformationMessage.adminLogin();
+                }
 
                 // 管理员登陆 密码错误
-                if (loginResult.equals(ExceptionMessage.wrongPassword())) {
+                if (loginResult.toString().equals(ExceptionMessage.wrongPassword())) {
                     ShowMessage.wrongPassword();
                     continue;
                 }
 
                 // 用户登陆 用户名密码错误
-                if (loginResult.equals(ExceptionMessage.wrongUserOrPasswd())) {
+                if (loginResult.toString().equals(ExceptionMessage.wrongUserOrPasswd())) {
                     ShowMessage.wrongUserOrPasswd();
                     continue;
                 }
 
+                // 退出
                 if (loginResult.equals(InformationMessage.backMenu())) {
                     break;
                 }
+
+                Menu.loginIdentify(loginIdentify);
+                // 管理员登陆
                 if (loginResult.equals(InformationMessage.adminLoginSuccessfully())) {
                     // 管理员功能模块循环
                     while (true) {
@@ -80,15 +98,31 @@ public class HotelManagement {
 
                 }
 
+                // 用户登陆
                 if (loginResult.equals(InformationMessage.userLoginSuccessfully())) {
                     // 用户功能模块循环
                     while (true) {
-                        Menu.user();
+                        Menu.user(user);
                         ShowMessage.userSelect();
                         int userSelect = UserInput.userSelect();
-
+                        if (userSelect == 3) {
+                            break;
+                        }
                     }
                 }
+
+                // 游客登陆
+                if (loginResult.equals(InformationMessage.guestLogin())) {
+                    while (true) {
+                        Menu.user();
+                        ShowMessage.userSelect();
+                        int guestSelect = UserInput.userSelect();
+                        if (guestSelect == 3) {
+                            break;
+                        }
+                    }
+                }
+
 
             } else {
                 ShowMessage.unknownException("cHM_main_20_43___43");

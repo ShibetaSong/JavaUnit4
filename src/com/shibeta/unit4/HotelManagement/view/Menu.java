@@ -60,4 +60,10 @@ public class Menu {
         System.out.println("\t2、查询服务");
         System.out.println("\t3、退出");
     }
+
+    public static void loginIdentify(String loginIdentify) {
+        System.out.println("\n====================");
+        System.out.println("当前身份：" + loginIdentify);
+        System.out.println("====================");
+    }
 }
