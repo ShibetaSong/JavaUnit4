@@ -72,4 +72,12 @@ public class InformationMessage {
     public static String roomIdentifyCorrect() {
         return "房号无误";
     }
+
+    public static String roomFacilitiesRepairApplymentSendSuccessfully() {
+        return "房间设备报修提交成功";
+    }
+
+    public static String userSexSetSuccessfully() {
+        return "住户性别设置成功";
+    }
 }
