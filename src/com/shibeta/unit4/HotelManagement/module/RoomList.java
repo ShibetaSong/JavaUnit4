@@ -5,19 +5,47 @@ import com.shibeta.unit4.HotelManagement.view.InformationMessage;
 
 
 public class RoomList {
+    /**
+     * 房间号，房间实例创建起便固定不再改变
+     */
     private final StringBuilder roomIdentify;
-    private StringBuilder roomType;
-    private static StringBuilder roomNum = new StringBuilder("100");
-    private StringBuilder roomFacilitiesRepair = new StringBuilder("无");
-    private boolean roomClear;
 
+    /**
+     * 房间类型，必须是Apartment中存在的房间类型
+     */
+    private StringBuilder roomType;
+
+    /**
+     * 房间号，静态，其随着房间实例的增加而增加，代表着最大的房间号
+     */
+    private static StringBuilder roomNum = new StringBuilder("100");
+
+    /**
+     * 房间报修情况，默认为"无"
+     */
+    private StringBuilder roomFacilitiesRepair = new StringBuilder("无");
+
+    /**
+     * 住户姓名、性别、证件号等个人信息
+     */
     private StringBuilder username;
     private StringBuilder userSex;
     private StringBuilder userIdentify;
     private StringBuilder userPhone;
+
+    /**
+     * 房间最大楼层数
+     */
     final int maxFloorNum = 24;
+
+    /**
+     * 房间单楼层最大房间数
+     */
     final int floorMaxRoomNum = 24;
 
+    /**
+     * 下一个房间对象，组成链表
+     */
     private RoomList nextRoom;
 
     /**
@@ -110,10 +138,11 @@ public class RoomList {
         return this.nextRoom.setRoomType(roomType, roomIdentify);
     }
 
-    public String getRoomIdentify() {
-        return this.roomIdentify.toString();
-    }
-
+    /**
+     * 获取指定住户的房间号
+     * @param userName 住户姓名
+     * @return String 房间号
+     */
     public String getRoomIdentify(String userName) {
         if (userName.strip().equals("")) {
             return ExceptionMessage.wrongName();
@@ -131,10 +160,12 @@ public class RoomList {
 
 
     }
-    public String getRoomFacilitiesRepair() {
-        return roomFacilitiesRepair.toString();
-    }
 
+    /**
+     * 获取指定房间的房间报修情况
+     * @param roomIdentify 房间号
+     * @return String 房间报修信息
+     */
     public String getRoomFacilitiesRepair(String roomIdentify) {
         String isRoomIdentifyCorrect;
         isRoomIdentifyCorrect = roomIdentifyVerify(roomIdentify);
@@ -151,6 +182,12 @@ public class RoomList {
         return ExceptionMessage.noMatchRoom();
     }
 
+    /**
+     * 提交房间报修申请
+     * @param roomIdentify 房间号
+     * @param text 报修申请
+     * @return String 提交成功情况或失败原因
+     */
     public String sendRoomFacilitiesRepair(String roomIdentify, String text) {
         String isRoomIdentifyCorrect;
         isRoomIdentifyCorrect = roomIdentifyVerify(roomIdentify);
@@ -167,14 +204,6 @@ public class RoomList {
             return this.nextRoom.sendRoomFacilitiesRepair(roomIdentify, text);
         }
         return ExceptionMessage.noMatchRoom();
-    }
-
-    public boolean isRoomClear() {
-        return roomClear;
-    }
-
-    public void setRoomClear(boolean roomClear) {
-        this.roomClear = roomClear;
     }
 
     /**
@@ -250,14 +279,6 @@ public class RoomList {
     }
 
     /**
-     * 获取当前房间住户性别
-     * @return 住户性别-String
-     */
-    public String getUserSex() {
-        return userSex.toString();
-    }
-
-    /**
      * 获取指定房间住户性别
      * @param roomIdentify 房间号
      * @return 用户性别
@@ -279,13 +300,11 @@ public class RoomList {
     }
 
     /**
-     * 设置当前房间用户性别
-     * @param userSex 性别
+     * 设置指定房间的用户性别
+     * @param roomIdentify 房间号
+     * @param userSex 用户性别，只能是"女"、"女性"、"男"、"男性"和"其他" 中的一项
+     * @return String 设置成功或失败原因
      */
-    public void setUserSex(StringBuilder userSex) {
-        this.userSex = userSex;
-    }
-
     public String setUserSex(String roomIdentify, String userSex) {
         String isRoomIdentifyCorrect;
         isRoomIdentifyCorrect = roomIdentifyVerify(roomIdentify);
@@ -325,10 +344,17 @@ public class RoomList {
         this.userPhone = userPhone;
     }
 
+    /**
+     * 开启新的房间 方法重载
+     */
     public void enableNewRoom() {
         enableNewRoom(true);
     }
 
+    /**
+     * 开启新的房间
+     * @param allowEmpty boolean 是否允许空房间存在
+     */
     public void enableNewRoom(boolean allowEmpty) {
         if (allowEmpty) {
             this.nextRoom = new RoomList();
@@ -339,6 +365,11 @@ public class RoomList {
         }
     }
 
+    /**
+     * 验证房间号是否合法
+     * @param roomIdentify 房间号
+     * @return String 合法或不合法原因
+     */
     public String roomIdentifyVerify(String roomIdentify) {
         if (roomIdentify.length() < 3 || roomIdentify.length() > 5) {
             return ExceptionMessage.noMatchRoom();
@@ -362,6 +393,11 @@ public class RoomList {
         }
     }
 
+    /**
+     * 验证用户性别是否合法
+     * @param userSex 用户性别
+     * @return String 合法或不合法原因
+     */
     public String userSexVerify(String userSex) {
         if (userSex.equals("其他")
                 || userSex.equals("女")
