@@ -60,4 +60,16 @@ public class InformationMessage {
     public static String enterGuestPhone() {
         return "请输入旅客手机号：";
     }
+
+    public static String roomTypeSetSuccessfully() {
+        return "房间类型设置成功";
+    }
+
+    public static String usernameSetSuccessfully() {
+        return "住户名设置成功";
+    }
+
+    public static String roomIdentifyCorrect() {
+        return "房号无误";
+    }
 }

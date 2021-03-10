@@ -33,4 +33,17 @@ public class ExceptionMessage {
     public static String roomTypeExist() {
         return "此类型房间已存在";
     }
+
+    public static String roomTypeDidNotSet() {
+        return "该房间类型未设置";
+    }
+
+    public static String noMatchRoom() {
+        return "房间不存在";
+    }
+
+    public static String emptyRoom() {
+        return "该房间无人入住";
+    }
+
 }

@@ -23,7 +23,7 @@ public class Apartment {
 
     /**
      * 获取全部房间类型
-     * @return 返回全部房间类型
+     * @return StringBuilder,返回全部房间类型
      */
     public static StringBuilder getRoomType() {
         roomType = new StringBuilder(roomType.toString().strip());
@@ -31,6 +31,14 @@ public class Apartment {
         return roomType;
     }
 
+    /**
+     * 获取全部房间类型
+     * @return 数组，返回全部房间类型
+     */
+    public static String[] getRoomTypes() {
+        roomTypes = roomType.toString().strip().split(" ");
+        return roomTypes;
+    }
     /**
      * 添加新类型房间
      * @param newType 新类型房间
@@ -40,6 +48,10 @@ public class Apartment {
         if (!(getRoomType(newType).toString().equals(ExceptionMessage.noSuchRoomType()))) {
             return new StringBuilder(ExceptionMessage.roomTypeExist());
         }
+        if (newType.equals("")) {
+            return new StringBuilder(ExceptionMessage.wrongFormat());
+        }
+
         roomType.append(" ");
         roomType.append(newType);
         roomTypes = roomType.toString().split(" ");
@@ -86,13 +98,21 @@ public class Apartment {
         return new StringBuilder(ExceptionMessage.noSuchRoomType());
     }
 
-    public static void applyRoomFacilitiesRepair(String facility) {
-        if (!(facility.equals(""))) {
-            roomFacilitiesRepair.append(facility);
+    /**
+     * 申请房间设备报修
+     * @param detail 申请详情
+     */
+    public static void applyRoomFacilitiesRepair(String detail) {
+        if (!(detail.equals(""))) {
+            roomFacilitiesRepair.append(detail);
             roomFacilitiesRepair.append("/end;");
         }
     }
 
+    /**
+     * 查看房间设备报修信息
+     * @return 全部报修信息
+     */
     public static String[] getRoomFacilitiesRepair() {
         return roomFacilitiesRepair.toString().split("/end;");
     }
