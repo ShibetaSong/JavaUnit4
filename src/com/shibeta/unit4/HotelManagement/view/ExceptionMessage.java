@@ -42,8 +42,19 @@ public class ExceptionMessage {
         return "房间不存在";
     }
 
+    public static String noRoom() {
+        return "住户未开房";
+    }
+
     public static String emptyRoom() {
         return "该房间无人入住";
     }
 
+    public static String wrongSex() {
+        return "性别有误";
+    }
+
+    public static String wrongName() {
+        return "姓名有误";
+    }
 }
