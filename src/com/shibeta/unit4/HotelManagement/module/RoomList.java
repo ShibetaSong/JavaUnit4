@@ -6,7 +6,6 @@ import com.shibeta.unit4.HotelManagement.view.InformationMessage;
 
 public class RoomList {
     private final StringBuilder roomIdentify;
-    private final int maxFloorNum = 24;
     private StringBuilder roomType;
     private static StringBuilder roomNum = new StringBuilder("100");
     private StringBuilder roomFacilitiesRepair;
@@ -16,6 +15,7 @@ public class RoomList {
     private StringBuilder userSex = null;
     private StringBuilder userIdentify = null;
     private StringBuilder userPhone = null;
+    final int maxFloorNum = 24;
     final int floorMaxRoomNum = 24;
 
     private RoomList nextRoom;
@@ -126,13 +126,19 @@ public class RoomList {
     }
 
     public String getUsername(String roomIdentify) {
+        String isRoomIdentifyCorrect;
+        isRoomIdentifyCorrect = roomIdentifyVerify(roomIdentify);
+        if (!(isRoomIdentifyCorrect.equals(InformationMessage.roomIdentifyCorrect()))) {
+            return isRoomIdentifyCorrect;
+        }
+
         if (this.roomIdentify.toString().equals(roomIdentify)) {
             return getUsername();
         }
         if (this.nextRoom == null) {
             return ExceptionMessage.noMatchRoom();
         }
-        return getUsername(roomIdentify);
+        return this.nextRoom.getUsername(roomIdentify);
     }
 
     public String setUsername(String username) {
