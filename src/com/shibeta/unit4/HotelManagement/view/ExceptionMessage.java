@@ -34,10 +34,6 @@ public class ExceptionMessage {
         return "此类型房间已存在";
     }
 
-    public static String roomTypeDidNotSet() {
-        return "该房间类型未设置";
-    }
-
     public static String noMatchRoom() {
         return "房间不存在";
     }
@@ -56,5 +52,9 @@ public class ExceptionMessage {
 
     public static String wrongName() {
         return "姓名有误";
+    }
+
+    public static String wrongUserIdentify() {
+        return "用户证件号有误";
     }
 }

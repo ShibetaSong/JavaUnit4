@@ -80,4 +80,16 @@ public class InformationMessage {
     public static String userSexSetSuccessfully() {
         return "住户性别设置成功";
     }
+
+    public static String userIdentifySetSuccessfully() {
+        return "住户证件号设置成功";
+    }
+
+    public static String unsettle() {
+        return "未设置";
+    }
+
+    public static String noRoomFacilitiesRepairApply() {
+        return "无设备报修";
+    }
 }
