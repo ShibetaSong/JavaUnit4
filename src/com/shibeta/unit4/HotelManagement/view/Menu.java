@@ -66,4 +66,21 @@ public class Menu {
         System.out.println("当前身份：" + loginIdentify);
         System.out.println("====================");
     }
+
+    public static void getRoomInformation(String roomIdentify,
+                                          String roomType,
+                                          String username,
+                                          String userIdentify,
+                                          String userSex,
+                                          String userPhone,
+                                          String roomFacilitiesRepairApply) {
+        System.out.println("=========================");
+        System.out.println("房间号：" + roomIdentify);
+        System.out.println("房间类型：" + roomType);
+        System.out.println("住户名：" + username);
+        System.out.println("证件号：" + userIdentify);
+        System.out.println("性别：" + userSex);
+        System.out.println("手机号：" + userPhone);
+        System.out.println("房间报修情况：" + roomFacilitiesRepairApply);
+    }
 }
