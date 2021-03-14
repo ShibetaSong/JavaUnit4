@@ -1,6 +1,7 @@
 package com.shibeta.unit4.HotelManagement.controlor;
 
 
+import com.shibeta.unit4.HotelManagement.module.RoomList;
 import com.shibeta.unit4.HotelManagement.module.UserInput;
 import com.shibeta.unit4.HotelManagement.module.inputVerify;
 import com.shibeta.unit4.HotelManagement.view.ExceptionMessage;
@@ -12,6 +13,8 @@ public class HotelManagement {
     public static void main(String[] args) {
         // 主程序循环
         while (true) {
+            RoomList room = new RoomList();
+
             // 欢迎页面
             int select = ManagementProgram.welcome();
             if (select == 3) {
@@ -33,7 +36,7 @@ public class HotelManagement {
                 Menu.login();
 
                 // 处理登陆信息
-                Object loginResult = ManagementProgram.login(select);
+                Object loginResult = ManagementProgram.login(select, room);
                 String user = null;
                 String loginIdentify = ExceptionMessage.unknownException("cHM_main_31_110_38");
 

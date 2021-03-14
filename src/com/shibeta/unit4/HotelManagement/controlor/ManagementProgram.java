@@ -1,6 +1,7 @@
 package com.shibeta.unit4.HotelManagement.controlor;
 
 import com.shibeta.unit4.HotelManagement.module.Admin;
+import com.shibeta.unit4.HotelManagement.module.RoomList;
 import com.shibeta.unit4.HotelManagement.module.User;
 import com.shibeta.unit4.HotelManagement.module.UserInput;
 import com.shibeta.unit4.HotelManagement.view.ExceptionMessage;
@@ -20,10 +21,10 @@ public class ManagementProgram {
      * @param identity 登陆身份：1、用户; 2、管理员
      * @return 若以用户登陆，返回用户登陆组信息；若以管理员登陆，返回管理员登陆成功字样
      */
-    public static Object login(int identity) {
+    public static Object login(int identity, RoomList room) {
         switch (identity) {
             case 1 -> {
-                String loginResult = userLogin().toString();
+                String loginResult = userLogin(room).toString();
                 String[] loginResults = loginResult.split(" ");
 
                 if (loginResults.length < 2) {
@@ -50,7 +51,7 @@ public class ManagementProgram {
      * 用户登陆核心进程
      * @return 若登陆正常，返回登陆成功、登陆身份，若是用户登陆则一并返回用户名。若登陆异常，则返回异常信息。
      */
-    public static StringBuilder userLogin() {
+    public static StringBuilder userLogin(RoomList room) {
         ShowMessage.usernameInput();
         StringBuilder user = new StringBuilder(UserInput.usernameInput());
         ShowMessage.passwordInput();
@@ -60,9 +61,11 @@ public class ManagementProgram {
             return new StringBuilder(InformationMessage.guestLogin() + " " + InformationMessage.guestName());
         }
 
-        for (int i = 0; i < User.userName.length; i++) {
-            if (user.toString().equals(User.userName[i])) {
-                if (password.equals(User.userPasswd[i])) {
+        User.setUserInformation(room);
+
+        for (int i = 0; i < User.getUserNames().length; i++) {
+            if (user.toString().equals(User.getUserNames()[i])) {
+                if (password.equals(User.getUserPasswords()[i])) {
                     StringBuilder loginResult = new StringBuilder(InformationMessage.userLoginSuccessfully());
                     loginResult.append(" ");
                     loginResult.append(InformationMessage.userLogin());
