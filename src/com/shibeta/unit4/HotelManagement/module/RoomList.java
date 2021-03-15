@@ -23,15 +23,17 @@ public class RoomList {
     /**
      * 房间报修情况，默认为"无"
      */
-    private StringBuilder roomFacilitiesRepair = new StringBuilder("无");
+    private StringBuilder roomFacilitiesRepair = new StringBuilder(InformationMessage.noRoomFacilitiesRepairApply());
 
     /**
      * 住户姓名、性别、证件号等个人信息
      */
-    private StringBuilder username;
-    private StringBuilder userSex;
-    private StringBuilder userIdentify;
-    private StringBuilder userPhone;
+    private StringBuilder username = new StringBuilder(InformationMessage.unsettle());
+    private StringBuilder userSex = new StringBuilder(InformationMessage.unsettle());
+    private StringBuilder userIdentify = new StringBuilder(InformationMessage.unsettle());
+    private StringBuilder userPhone = new StringBuilder(InformationMessage.unsettle());
+    final int userIdentifyMaxLength = 20;
+    final int userIdentifyMinLength = 15;
 
     /**
      * 房间最大楼层数
@@ -46,7 +48,7 @@ public class RoomList {
     /**
      * 下一个房间对象，组成链表
      */
-    private RoomList nextRoom;
+    RoomList nextRoom;
 
     /**
      * 房间创建时，自动生成房间号
@@ -85,7 +87,7 @@ public class RoomList {
     public String getRoomType(String roomIdentify) {
         if (this.roomIdentify.toString().equals(roomIdentify)) {
             if (roomType == null) {
-                return ExceptionMessage.roomTypeDidNotSet();
+                return InformationMessage.unsettle();
             }
             return roomType.toString();
         }
@@ -136,6 +138,10 @@ public class RoomList {
             enableNewRoom();
         }
         return this.nextRoom.setRoomType(roomType, roomIdentify);
+    }
+
+    public String getRoomIdentify() {
+        return this.roomIdentify.toString();
     }
 
     /**
@@ -241,18 +247,9 @@ public class RoomList {
     /**
      * 设置当前房间住户姓名
      * @param username 住户姓名
-     * @return 用户名设置成功
      */
-    public String setUsername(String username) {
-        if (this.username == null) {
-            this.username = new StringBuilder(username);
-        } else {
-            if (this.nextRoom == null) {
-                enableNewRoom(false);
-            }
-            return this.nextRoom.setUsername(username);
-        }
-        return InformationMessage.usernameSetSuccessfully();
+    public void setUsername(String username) {
+        this.username = new StringBuilder(username);
     }
 
     /**
@@ -261,7 +258,7 @@ public class RoomList {
      * @param roomIdentify 指定房间号
      * @return 设置成功或失败原因
      */
-    public String setUsername(String username, String roomIdentify) {
+    public String setUsername(String roomIdentify, String username) {
         String isRoomIdentifyCorrect;
         isRoomIdentifyCorrect = roomIdentifyVerify(roomIdentify);
         if (!(isRoomIdentifyCorrect.equals(InformationMessage.roomIdentifyCorrect()))) {
@@ -275,7 +272,7 @@ public class RoomList {
         if (this.nextRoom == null) {
             enableNewRoom(true);
         }
-        return this.nextRoom.setUsername(username, roomIdentify);
+        return this.nextRoom.setUsername(roomIdentify, username);
     }
 
     /**
@@ -314,7 +311,7 @@ public class RoomList {
 
         String isUserSexCorrect;
         isUserSexCorrect = userSexVerify(userSex);
-        if (!(isUserSexCorrect.equals(InformationMessage.userSexSetSuccessfully()))) {
+        if (!(isUserSexCorrect.equals(userSex))) {
             return isUserSexCorrect;
         }
 
@@ -329,15 +326,64 @@ public class RoomList {
     }
 
     public String getUserIdentify() {
-        return userIdentify.toString();
+        return this.userIdentify.toString();
     }
 
-    public void setUserIdentify(StringBuilder userIdentify) {
-        this.userIdentify = userIdentify;
+    public String getUserIdentify(String roomIdentify) {
+        String isRoomIdentifyCorrect;
+        isRoomIdentifyCorrect = roomIdentifyVerify(roomIdentify);
+        if (!(isRoomIdentifyCorrect.equals(InformationMessage.roomIdentifyCorrect()))) {
+            return isRoomIdentifyCorrect;
+        }
+
+        if (this.roomIdentify.toString().equals(roomIdentify)) {
+            return this.userIdentify.toString();
+        }
+        if (this.nextRoom != null) {
+            return this.nextRoom.getUserIdentify(roomIdentify);
+        }
+        return ExceptionMessage.noMatchRoom();
     }
 
-    public String getUserPhone() {
-        return userPhone.toString();
+    public String setUserIdentify(String roomIdentify, String userIdentify) {
+        String isRoomIdentifyCorrect;
+        isRoomIdentifyCorrect = roomIdentifyVerify(roomIdentify);
+        if (!(isRoomIdentifyCorrect.equals(InformationMessage.roomIdentifyCorrect()))) {
+            return isRoomIdentifyCorrect;
+        }
+
+        String isUserIdentifyCorrect;
+        isUserIdentifyCorrect = userIdentifyVerify(userIdentify);
+        if (!(isUserIdentifyCorrect).equals(userIdentify)) {
+            return isUserIdentifyCorrect;
+        }
+
+        if (this.roomIdentify.toString().equals(roomIdentify)) {
+            this.userIdentify = new StringBuilder(userIdentify);
+            return InformationMessage.userIdentifySetSuccessfully();
+        }
+        if (this.nextRoom != null) {
+            return this.nextRoom.setUserIdentify(roomIdentify, userIdentify);
+        }
+        return ExceptionMessage.noMatchRoom();
+
+    }
+
+    public String getUserPhone(String roomIdentify) {
+        String isRoomIdentifyCorrect;
+        isRoomIdentifyCorrect = roomIdentifyVerify(roomIdentify);
+        if (!(isRoomIdentifyCorrect.equals(InformationMessage.roomIdentifyCorrect()))) {
+            return isRoomIdentifyCorrect;
+        }
+
+        if (this.roomIdentify.toString().equals(roomIdentify)) {
+            return this.userPhone.toString();
+        }
+
+        if (this.nextRoom != null) {
+            return this.nextRoom.getUserPhone(roomIdentify);
+        }
+        return ExceptionMessage.noMatchRoom();
     }
 
     public void setUserPhone(StringBuilder userPhone) {
@@ -360,7 +406,7 @@ public class RoomList {
             this.nextRoom = new RoomList();
             return;
         }
-        if (this.username != null) {
+        if (!(this.username.toString().equals(InformationMessage.unsettle()))) {
             this.nextRoom = new RoomList();
         }
     }
@@ -404,9 +450,15 @@ public class RoomList {
                 || userSex.equals("女性")
                 || userSex.equals("男")
                 || userSex.equals("男性")) {
-            return InformationMessage.userSexSetSuccessfully();
+            return userSex;
         }
         return ExceptionMessage.wrongSex();
     }
 
+    public String userIdentifyVerify(String userIdentify) {
+        if (userIdentify.length() < userIdentifyMinLength || userIdentify.length() > userIdentifyMaxLength) {
+            return ExceptionMessage.wrongUserIdentify();
+        }
+        return userIdentify;
+    }
 }
