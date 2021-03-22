@@ -7,7 +7,8 @@ public class Menu {
         System.out.println("\t请选择登陆类型");
         System.out.println("\t\t1、用户");
         System.out.println("\t\t2、管理员");
-        System.out.println("\t\t3、退出");
+        System.out.println("\t\t3、游客");
+        System.out.println("\t\t4、退出");
     }
 
     public static void login() {
