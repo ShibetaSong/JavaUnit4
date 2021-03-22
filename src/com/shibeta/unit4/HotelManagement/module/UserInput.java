@@ -25,10 +25,18 @@ public class UserInput {
         return select;
     }
 
+    /**
+     * 要求用户输入姓名
+     * @return 用户姓名
+     */
     public static String usernameInput() {
         return input.nextLine();
     }
 
+    /**
+     * 要求用户输入密码
+     * @return 用户密码
+     */
     public static String passwordInput() {
         return input.nextLine();
     }
