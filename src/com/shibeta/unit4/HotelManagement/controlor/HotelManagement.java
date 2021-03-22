@@ -17,10 +17,10 @@ public class HotelManagement {
 
             // 欢迎页面
             int select = ManagementProgram.welcome();
-            if (select == 3) {
+            if (select == 4) {
                 break;
             }
-            select = inputVerify.userSelectExchange(select, 1, 2);
+            select = inputVerify.userSelectExchange(select, 1, 3);
             String result = inputVerify.userSelectVerify(select);
 
             if (result.equals(ExceptionMessage.numberInputOutOfRange())) {
@@ -38,7 +38,7 @@ public class HotelManagement {
                 // 处理登陆信息
                 Object loginResult = ManagementProgram.login(select, room);
                 String user = null;
-                String loginIdentify = ExceptionMessage.unknownException("cHM_main_31_110_38");
+                String loginIdentify = ExceptionMessage.unknownException("cHM_main_31_110_41");
 
                 if (loginResult instanceof String[]) {
                     if (((String[]) loginResult).length > 2) {
@@ -48,7 +48,12 @@ public class HotelManagement {
                     loginResult = ((String[]) loginResult)[0];
 
                 } else if (loginResult instanceof String) {
-                    loginIdentify = InformationMessage.adminLogin();
+                    if (loginResult.equals(InformationMessage.adminLoginSuccessfully())) {
+                        loginIdentify = InformationMessage.adminLogin();
+                    }
+                    if (loginResult.equals(InformationMessage.guestLoginSuccessfully())) {
+                        loginIdentify = InformationMessage.guestLogin();
+                    }
                 }
 
                 // 管理员登陆 密码错误
@@ -116,7 +121,7 @@ public class HotelManagement {
                 }
 
                 // 游客登陆
-                if (loginResult.equals(InformationMessage.guestLogin())) {
+                if (loginResult.equals(InformationMessage.guestLoginSuccessfully())) {
                     while (true) {
                         Menu.user();
                         ShowMessage.userSelect();
@@ -126,8 +131,6 @@ public class HotelManagement {
                         }
                     }
                 }
-
-
             } else {
                 ShowMessage.unknownException("cHM_main_20_43___43");
             }
