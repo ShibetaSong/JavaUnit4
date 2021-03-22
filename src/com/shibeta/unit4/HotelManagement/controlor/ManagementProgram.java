@@ -41,9 +41,14 @@ public class ManagementProgram {
                 }
                 return InformationMessage.adminLoginSuccessfully();
             }
+            case 3 -> {
+                Menu.loginIdentify(InformationMessage.guestLogin());
+                return InformationMessage.guestLoginSuccessfully();
+            }
             default -> {
                 return ExceptionMessage.unknownException("cMP_login_32_36___36");
             }
+
         }
     }
 
@@ -58,7 +63,7 @@ public class ManagementProgram {
         String password = UserInput.passwordInput();
 
         if (user.toString().equals("") && password.equals("")) {
-            return new StringBuilder(InformationMessage.guestLogin() + " " + InformationMessage.guestName());
+            return new StringBuilder(InformationMessage.guestLoginSuccessfully());
         }
 
         User.setUserInformation(room);
@@ -76,12 +81,10 @@ public class ManagementProgram {
             }
         }
         return new StringBuilder(ExceptionMessage.wrongUserOrPasswd());
-
     }
 
     public static boolean adminLogin(StringBuilder passwd) {
         Admin admin = new Admin();
         return passwd.toString().equals(admin.getAdminPasswd());
-
     }
 }
