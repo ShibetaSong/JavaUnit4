@@ -29,6 +29,10 @@ public class InformationMessage {
         return "游客登陆";
     }
 
+    public static String guestLoginSuccessfully() {
+        return "游客登陆成功";
+    }
+
     public static String guestName() {
         return "游客";
     }
