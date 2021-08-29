@@ -3,7 +3,10 @@ package com.shibeta.unit4.day06.safetyOfDXC;
 public class Demo2 {
     /**
      * 线程同步: synchronized
-     * @param args
+     * 线程不安全解决办法：
+     *  1、同步代码块
+     *  2、同步方法
+     *  3、显式锁
      */
     public static void main(String[] args) {
         // 线程不安全

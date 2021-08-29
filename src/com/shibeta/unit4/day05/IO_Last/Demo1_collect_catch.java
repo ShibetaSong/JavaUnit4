@@ -19,6 +19,7 @@ public class Demo1_collect_catch {
             pw.println(sdf.format(new Date()));
             e.printStackTrace(pw);
             pw.close();
+            fw.close();
         }
     }
 }

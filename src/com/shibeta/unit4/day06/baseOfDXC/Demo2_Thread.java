@@ -19,9 +19,6 @@ public class Demo2_Thread {
      *  sleep(long millis, int nanos(纳秒))
      *  setDaemon(boolean on)   将此线程标记为 daemon线程(守护线程) 或用户线程
      *      守护线程掌握不了自己的生命，当所有用户线程死亡时，守护线程死亡。
-     *
-     *
-     * @param args
      */
     public static void main(String[] args) {
         MyThread m = new MyThread();
