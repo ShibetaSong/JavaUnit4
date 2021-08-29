@@ -47,7 +47,8 @@ public class Menu {
         System.out.println("1. 快递录入");
         System.out.println("2. 查看所有快递");
         System.out.println("3. 修改快递");
-        System.out.println("4. 退出");
+        System.out.println("4. 删除快递");
+        System.out.println("5. 退出");
     }
 
     public static void resetExpress() {

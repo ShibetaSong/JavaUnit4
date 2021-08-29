@@ -33,10 +33,6 @@ public class InformationMessage {
         return "游客登陆成功";
     }
 
-    public static String guestName() {
-        return "游客";
-    }
-
     public static String adminLogin() {
         return "管理员登陆";
     }

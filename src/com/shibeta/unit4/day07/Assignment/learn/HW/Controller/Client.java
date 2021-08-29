@@ -1,5 +1,6 @@
 package com.shibeta.unit4.day07.Assignment.learn.HW.Controller;
 
+import com.shibeta.unit4.HotelManagement.module.User;
 import com.shibeta.unit4.day07.Assignment.learn.HW.Model.Express;
 import com.shibeta.unit4.day07.Assignment.learn.HW.Model.ExpressMap;
 import com.shibeta.unit4.day07.Assignment.learn.HW.Model.UserIO;
@@ -11,7 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Client {
+public class
+Client {
     private final int PORT = 10886;
     private Socket client;
 //    private ESystem es = new ESystem();
@@ -23,6 +25,8 @@ public class Client {
             c.start();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("连接服务器失败");
         }
     }
 
@@ -95,10 +99,10 @@ public class Client {
 
 //        List<Express> expressList = (List<Express>) objIn.readObject();
         Object obj = objIn.readObject();
-        System.out.println(obj);
+//        System.out.println(obj);
         List<Express> expressList = new ArrayList<Express>((List)obj);
 
-        System.out.println(expressList.toString());
+//        System.out.println(expressList.toString());
         for (Express e: expressList) {
             System.out.println(e);
         }
@@ -142,6 +146,35 @@ public class Client {
 
     }
 
+    /**
+     * 删除快递
+     * @param objOut 输出流
+     * @param objIn 输入流
+     * @throws IOException I
+     * @throws ClassNotFoundException C
+     */
+    public void delete(ObjectOutputStream objOut, ObjectInputStream objIn) throws IOException, ClassNotFoundException {
+        System.out.println("删除快递");
+        objOut.writeUTF("delete");
+        objOut.flush();
+
+        // 根据快递单号删除
+        System.out.println(InformationMessage.inputENum());
+        String ENum = UserIO.userInput();
+
+        System.out.println("确认删除(y)? 请确认单号: "+ENum);
+        if (!UserIO.userInput().equals("y")) {
+            objOut.writeUTF("cancel");
+            objOut.flush();
+            return;
+        }
+        objOut.writeUTF(ENum);
+        objOut.flush();
+
+        // 获取删除结果
+        System.out.println(objIn.readUTF());
+
+    }
     public void reset(ObjectOutputStream objOut, ObjectInputStream objIn) throws IOException, ClassNotFoundException{
         System.out.println("修改快递");
         objOut.writeUTF("reset");
@@ -153,10 +186,11 @@ public class Client {
         objOut.flush();
 
         Object res = objIn.readObject();
-        if (!(res instanceof Express)) {
+        if (!(res instanceof Boolean)) {
             System.out.println(res);
             return;
         }
+
 
         System.out.println(InformationMessage.inputNewENum());
         objOut.writeUTF(UserIO.userInput());
@@ -206,10 +240,11 @@ public class Client {
 //            objIn = new ObjectInputStream(client.getInputStream());
             Menu.clientAdminMenu();
             switch (UserIO.userSelect()) {
-                case 4 -> {
+                case 5 -> {
 //                    break adminMain;
                     return;
                 }
+                case 4 -> delete(objOut, objIn);
                 case 3 -> reset(objOut, objIn);
                 case 2 -> findAll(objOut, objIn);
                 case 1 -> add(objOut, objIn);

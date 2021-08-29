@@ -125,24 +125,33 @@ public class Server {
 //                        }
                     }
                     case "add" -> {
+
                         // 获取客户端发送的参数
                         Express e = (Express) objIn.readObject();
-                        if (!eMap.setENum(e, e.getENum())) {
-//                        System.out.println(InformationMessage.alreadyHasENum());
-                            objOut.writeUTF("快递添加失败，快递单号已存在！");
+                        if (add(e, eMap)) {
+                            objOut.writeUTF("快递添加成功!");
                             objOut.flush();
                             continue;
                         }
-                        eMap.setECompany(e, e.getECompany());
-                        eMap.setLocation(e);
-
-                        Boolean res = eMap.add(eMap.setPickupCode(e), e);
-                        if (res) {
-                            objOut.writeUTF("添加成功\n"+e);
-                        } else {
-                            objOut.writeUTF("快递添加失败");
-                        }
+                        objOut.writeUTF("快递添加失败! 请检查快递单号是否重复");
                         objOut.flush();
+
+//                        if (!eMap.setENum(e, e.getENum())) {
+////                        System.out.println(InformationMessage.alreadyHasENum());
+//                            objOut.writeUTF("快递添加失败，快递单号已存在！");
+//                            objOut.flush();
+//                            continue;
+//                        }
+//                        eMap.setECompany(e, e.getECompany());
+//                        eMap.setLocation(e);
+//
+//                        Boolean res = eMap.add(eMap.setPickupCode(e), e);
+//                        if (res) {
+//                            objOut.writeUTF("添加成功\n"+e);
+//                        } else {
+//                            objOut.writeUTF("快递添加失败");
+//                        }
+//                        objOut.flush();
                     }
                     case "reset" -> {
                         System.out.println("reset");
@@ -151,22 +160,52 @@ public class Server {
                             objOut.writeObject("快递不存在");
                             continue;
                         }
-                        objOut.writeObject(eMap.findByENum(ENum));
+                        Express oldE = eMap.findByENum(ENum);
+//                        String oldECompany = oldE.getECompany();
+                        int[] oldLocation = oldE.getLocation();
+                        int oldPickCode = oldE.getPickupCode();
 
-                        Express e = (Express) objIn.readObject();
+                        objOut.writeObject(true);
+
+//                        Express e = (Express) objIn.readObject();
                         String newENum = objIn.readUTF();
                         String newECom = objIn.readUTF();
+
                         System.out.println(newENum + ", " + newECom);
-                        if (eMap.resetENum(e, newENum, newECom)) {
-                            objOut.writeUTF("修改成功\n" + eMap.findByENum(newENum));
+                        if (delete(ENum, eMap)) {
+                            Express newE = new Express(newENum, oldPickCode, newECom, oldLocation[0], oldLocation[1]);
+                            if (add(newE, eMap)) {
+                                objOut.writeUTF("修改成功\n" + eMap.findByENum(newENum));
+                                System.out.println("修改成功");
+                                objOut.flush();
+                                continue;
+                            }
+                            add(oldE, eMap);
+                            continue;
                         } else {
                             objOut.writeUTF("修改失败，快递单号冲突！");
+                            objOut.flush();
                         }
 
-
-                        objOut.flush();
                         System.out.println(eMap.getExpresses().values());
 
+                    }
+                    case "delete" -> {
+                        System.out.println("delete");
+                        String ENum = objIn.readUTF();
+
+                        if (ENum.equals("cancel")) {
+                            continue;
+                        }
+
+                        if (delete(ENum, eMap)) {
+                            objOut.writeUTF("删除成功");
+                            objOut.flush();
+                            continue;
+                        }
+
+                        objOut.writeUTF("删除失败, 快递不存在!");
+                        objOut.flush();
                     }
                 }
             }
@@ -195,5 +234,25 @@ public class Server {
             }
         }
 
+    }
+
+    /**
+     * 添加快递
+     * @param e 要添加的快递
+     * @param eMap 快递管理
+     * @return boolean
+     * @throws IOException I
+     */
+    public boolean add(Express e, ExpressMap eMap) throws IOException{
+        if (!eMap.setENum(e, e.getENum())) {
+            return false;
+        }
+        eMap.setECompany(e, e.getECompany());
+        eMap.setLocation(e);
+        return eMap.add(eMap.setPickupCode(e), e);
+    }
+
+    public boolean delete(String ENum, ExpressMap eMap) {
+        return eMap.remove(ENum);
     }
 }

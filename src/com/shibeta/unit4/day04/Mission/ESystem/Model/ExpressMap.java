@@ -1,11 +1,8 @@
-package com.shibeta.unit4.day07.Assignment.learn.HW.Model;
+package com.shibeta.unit4.day04.Mission.ESystem.Model;
 
-import com.shibeta.unit4.day07.Assignment.learn.HW.Model.Express;
-
-import java.io.Serializable;
 import java.util.*;
 
-public class ExpressMap implements Serializable {
+public class ExpressMap{
     final Random random = new Random();
     /**
      * 设置最大行数、列数，
@@ -144,7 +141,6 @@ public class ExpressMap implements Serializable {
     public Boolean remove(String ENum) {
         for (Express e: this.expressMap.values()) {
             if (e.getENum().equals(ENum)) {
-                this.ENumSet.remove(ENum);
                 this.expressMap.remove(e.getPickupCode());
                 return true;
             }
@@ -166,28 +162,6 @@ public class ExpressMap implements Serializable {
         return null;
     }
 
-    /**
-     * 查询快递单号是否存在
-     * @param ENum - 快递单号
-     * @return boolean
-     */
-    public boolean checkIsENumExist(String ENum) {
-        return this.ENumSet.contains(ENum);
-    }
-
-    /**
-     * 根据快递单号查找快递
-     * @param ENum 快递单号
-     * @return Express()
-     */
-    public Express findByENum(String ENum) {
-        for (Express e: expressMap.values()) {
-            if (e.getENum().equals(ENum)) {
-                return e;
-            }
-        }
-        return new Express();
-    }
     /**
      * 设置快递位置
      * @param e 快递
@@ -226,9 +200,5 @@ public class ExpressMap implements Serializable {
         for (Express e : list) {
             System.out.println(e);
         }
-    }
-
-    public TreeMap<Integer, Express> getExpresses() {
-        return expressMap;
     }
 }
