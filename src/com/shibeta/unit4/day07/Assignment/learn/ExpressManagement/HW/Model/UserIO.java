@@ -1,4 +1,4 @@
-package com.shibeta.unit4.day07.Assignment.learn.HW.Model;
+package com.shibeta.unit4.day07.Assignment.learn.ExpressManagement.HW.Model;
 
 import com.shibeta.unit4.day05.HW.View.ExceptionMessage;
 import com.shibeta.unit4.day05.HW.View.InformationMessage;

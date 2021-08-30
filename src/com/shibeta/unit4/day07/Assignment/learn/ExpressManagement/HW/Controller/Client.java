@@ -1,4 +1,4 @@
-package com.shibeta.unit4.day07.Assignment.learn.HW.Controller;
+package com.shibeta.unit4.day07.Assignment.learn.ExpressManagement.HW.Controller;
 
 import com.shibeta.unit4.day07.Assignment.learn.HW.Model.Express;
 import com.shibeta.unit4.day07.Assignment.learn.HW.Model.UserIO;
@@ -14,8 +14,6 @@ public class
 Client {
     private final int PORT = 10886;
     private Socket client;
-//    private ESystem es = new ESystem();
-//    private ExpressMap eM = ESystem.getEM();
 
     public static void main(String[] args) {
         Client c = new Client();
@@ -41,24 +39,6 @@ Client {
             objOut = new ObjectOutputStream(out);
             objIn = new ObjectInputStream(in);
             welcomeMenu(objOut, objIn);
-//            clientMain: while (true) {
-//                Menu.welcomeMenu();
-//                try {
-//                    switch (UserIO.userSelect()) {
-//                        case 3 -> {
-//                            objOut.writeUTF("break");
-//                            objOut.flush();
-//
-//                            break clientMain;
-//                        }
-//                        case 2 -> adminMenu(objOut, objIn);
-//                        case 1 -> getExpress(objOut, objIn);
-//                    }
-//                } catch (IOException | ClassNotFoundException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-
 
             try {
                 if (client!=null) {
@@ -96,29 +76,12 @@ Client {
             return;
         }
 
-//        List<Express> expressList = (List<Express>) objIn.readObject();
         Object obj = objIn.readObject();
-//        System.out.println(obj);
         List<Express> expressList = new ArrayList<Express>((List)obj);
 
-//        System.out.println(expressList.toString());
         for (Express e: expressList) {
             System.out.println(e);
         }
-//        for (int i=0; i<count; i++) {
-
-//            if (obj instanceof TreeMap) {
-//                for (Express e: ((TreeMap<Integer, Express>) obj).values()) {
-//                    System.out.println(e);
-//                    return;
-//                }
-//            }
-//            if (obj instanceof String) {
-//                System.out.println((String) obj);
-//                return;
-//            }
-//            System.out.println(obj);
-//        }
     }
     public void add(ObjectOutputStream objOut, ObjectInputStream objIn) throws IOException, ClassNotFoundException {
         System.out.println("=====录入快递=====");
@@ -207,39 +170,6 @@ Client {
         objOut.flush();
 
         System.out.println(objIn.readUTF());
-
-
-//        // 提示输入旧、新快递单号及新快递公司
-//        System.out.println(InformationMessage.inputENum());
-//        String ENum = UserIO.userInput();
-//        objOut.writeUTF(ENum);
-//        objOut.flush();
-//
-//        Object res = objIn.readObject();
-//        if (!(res instanceof Express)) {
-//            System.out.println(res);
-//            return;
-//        }
-//        System.out.println("获取到快递"+res);
-//        System.out.println("设置快递信息中...");
-//        // 设置快递信息并发送至服务器
-//        Express e = (Express) res;
-//
-//        e = new Express(e.getENum(), e.getPickupCode(), e.getECompany(), e.getLocation()[0], e.getLocation()[1]);
-//
-//        System.out.println(InformationMessage.inputNewENum());
-//        e.setENum(UserIO.userInput());
-//        System.out.println(InformationMessage.inputNewCompany());
-//        e.setECompany(UserIO.userInput());
-//
-//        Express newE = new Express(e.getENum(), e.getPickupCode(), e.getECompany(), e.getLocation()[0], e.getLocation()[1]);
-//        System.out.println("提交快递信息中..." + newE);
-//        objOut.writeObject(newE);
-
-
-//        // 获取服务器设置反馈
-//        System.out.println(objIn.readUTF());
-
     }
 
     /**
@@ -272,8 +202,6 @@ Client {
 
     public void adminMenu(ObjectOutputStream objOut, ObjectInputStream objIn) throws IOException, ClassNotFoundException {
         while (true) {
-//            objOut = new ObjectOutputStream(client.getOutputStream());
-//            objIn = new ObjectInputStream(client.getInputStream());
             Menu.clientAdminMenu();
             switch (UserIO.userSelect()) {
                 case 5 -> {

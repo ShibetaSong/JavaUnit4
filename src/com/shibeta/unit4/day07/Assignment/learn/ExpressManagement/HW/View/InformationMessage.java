@@ -1,4 +1,4 @@
-package com.shibeta.unit4.day07.Assignment.learn.HW.View;
+package com.shibeta.unit4.day07.Assignment.learn.ExpressManagement.HW.View;
 
 public class InformationMessage {
     public static String userSelect() {
