@@ -7,7 +7,7 @@ public class ReduceText {
     public static void main(String[] args) {
         String text = "abbbbbbbcddddd";
 
-        System.out.println(reduce(text).toString());
+        System.out.println(reduce(text));
     }
 
     /**

@@ -42,10 +42,10 @@ public class RewriteTrim {
 
         // 若前\后有空格，则执行去除操作
         if (headIndex != -1) {
-            newText = newText.replace(0, headIndex, "");
+            newText.replace(0, headIndex, "");
         }
         if (feetIndex != -1) {
-            newText = newText.replace(newText.length()-feetIndex, newText.length(), "");
+            newText.replace(newText.length() - feetIndex, newText.length(), "");
         }
 
         // 返回经过去除操作的新字符串
